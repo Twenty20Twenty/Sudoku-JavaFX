@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nstu.sudokugame.ControllerFXML.GameController">
+   <children>
+      <MenuBar fx:id="menuBar">
+        <menus>
+          <Menu mnemonicParsing="false" text="Основное">
+            <items>
+              <MenuItem fx:id="menuCheck" mnemonicParsing="false" text="Проверка" />
+                  <MenuItem fx:id="menuReset" mnemonicParsing="false" text="Сбросить сетку" />
+                  <MenuItem fx:id="menuBackToStart" mnemonicParsing="false" text="Вернуться в меню" />
+                  <MenuItem fx:id="menuCloseApp" mnemonicParsing="false" text="Закрыть приолжение" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Инфо">
+            <items>
+              <MenuItem fx:id="menuAuthors" mnemonicParsing="false" text="Авторы" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
