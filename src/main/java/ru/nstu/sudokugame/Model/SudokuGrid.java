@@ -118,8 +118,6 @@ public class SudokuGrid {
         int n = (int) sqrt(N);
         int[][] flook = new int[N][N];
         int iterator = 0;
-        //int difficulty = N * N;
-        //System.out.println(difficulty);
         Random random = new Random();
 
         while (iterator < arrayDif[n - 2][dif]) {
@@ -129,7 +127,6 @@ public class SudokuGrid {
                 iterator += 1;
 
                 M[i][j] = 0;
-                //difficulty -= 1;
             }
         }
         return M;
@@ -175,6 +172,28 @@ public class SudokuGrid {
             }
         }
         return true;
+    }
+
+    public static int[][] generateTemplateMatrix(int N) {
+
+        int size = N + (int) Math.sqrt(N) - 1;
+        int[][] matrix = new int[size][size];
+
+        // Определяем размер мини-квадратов
+        int miniSquareSize = (int) Math.sqrt(N);
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                // Проверяем, нужно ли ставить ноль
+                if ((i % (miniSquareSize + 1) == miniSquareSize) || (j % (miniSquareSize + 1) == miniSquareSize)) {
+                    matrix[i][j] = 0;
+                } else {
+                    matrix[i][j] = 1;
+                }
+            }
+        }
+
+        return matrix;
     }
 
     public static void print(int[][] M, int N) {

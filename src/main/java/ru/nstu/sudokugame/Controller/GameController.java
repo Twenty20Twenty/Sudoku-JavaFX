@@ -1,4 +1,4 @@
-package ru.nstu.sudokugame.ControllerFXML;
+package ru.nstu.sudokugame.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,7 +66,7 @@ public class GameController implements Initializable {
         // иниц модель
         model = new Model(N, difficulty);
         // создание PaneGrid для пользов интерф
-        GridPane gridPane = model.createSudokuGridUI(N);
+        GridPane gridPane = createSudokuGridUI(model.getN());
         BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK, null, null);
         Background background = new Background(backgroundFill);
         gridPane.setBackground(background);
@@ -79,6 +79,35 @@ public class GameController implements Initializable {
         gridPane.setLayoutX(5);
         // иниц обработчиков меню
         initAction();
+    }
+
+    public GridPane createSudokuGridUI(int N) {
+        GridPane gridPane = new GridPane();
+        int size = N + (int) sqrt(N) - 1;
+
+        int pattern[][] = SudokuGrid.generateTemplateMatrix(N);
+        int row = 0, col = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (pattern[j][i] == 1) {
+                    gridPane.add(model.getTextFields()[row][col], j, i);
+                }
+                if (pattern[j][i] == 0) {
+                    Pane cell = new Pane();
+                    cell.setPrefWidth(5);
+                    cell.setPrefHeight(5);
+                    gridPane.add(cell, j, i);
+                }
+                if (pattern[0][j] == 1) {
+                    col++;
+                }
+            }
+            if (pattern[i][0] == 1) {
+                row++;
+            }
+            col = 0;
+        }
+        return gridPane;
     }
 
     public void initAction() {

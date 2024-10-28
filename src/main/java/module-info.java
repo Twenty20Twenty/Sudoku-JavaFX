@@ -6,8 +6,8 @@ module ru.nstu.sudokugame {
     opens ru.nstu.sudokugame to javafx.fxml;
     exports ru.nstu.sudokugame;
 
-    opens ru.nstu.sudokugame.ControllerFXML;
-    exports ru.nstu.sudokugame.ControllerFXML;
+    opens ru.nstu.sudokugame.Controller;
+    exports ru.nstu.sudokugame.Controller;
 
     opens ru.nstu.sudokugame.Model;
 }

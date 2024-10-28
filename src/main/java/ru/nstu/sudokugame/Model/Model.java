@@ -4,15 +4,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.Arrays;
 import java.util.Objects;
-
-import static java.lang.Math.sqrt;
 
 public class Model {
     private int difficulty;
@@ -104,34 +100,6 @@ public class Model {
         }
     }
 
-    public GridPane createSudokuGridUI(int N) {
-        GridPane gridPane = new GridPane();
-        int size = N + (int) sqrt(N) - 1;
-
-        int pattern[][] = GridTemplate.generateMatrix(N);
-        int row = 0, col = 0;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (pattern[j][i] == 1) {
-                    gridPane.add(textFields[row][col], j, i);
-                }
-                if (pattern[j][i] == 0) {
-                    Pane cell = new Pane();
-                    cell.setPrefWidth(5);
-                    cell.setPrefHeight(5);
-                    gridPane.add(cell, j, i);
-                }
-                if (pattern[0][j] == 1) {
-                    col++;
-                }
-            }
-            if (pattern[i][0] == 1) {
-                row++;
-            }
-            col = 0;
-        }
-        return gridPane;
-    }
 
     public void updateCurrentGrid() {
         for (int i = 0; i < N; i++) {
@@ -163,5 +131,9 @@ public class Model {
 
     public int getCheckSum() {
         return checkSum;
+    }
+
+    public TextField[][] getTextFields() {
+        return textFields;
     }
 }

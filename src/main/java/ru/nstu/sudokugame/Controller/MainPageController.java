@@ -1,4 +1,4 @@
-package ru.nstu.sudokugame.ControllerFXML;
+package ru.nstu.sudokugame.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,4 +68,6 @@ public class MainPageController implements Initializable {
         difficultyComboBox.setValue("Легко");
         gridNComboBox.setValue("9x9");
     }
+
+
 }
