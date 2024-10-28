@@ -64,5 +64,6 @@
             <Insets />
          </opaqueInsets>
       </VBox>
+      <Button fx:id="exitButton" layoutX="524.0" layoutY="361.0" mnemonicParsing="false" onAction="#exitButtonAction" text="Ливнуть" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

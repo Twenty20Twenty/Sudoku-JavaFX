@@ -1,5 +1,8 @@
 package ru.nstu.sudokugame.Model;
 
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -113,13 +116,17 @@ public class SudokuGrid {
         return M;
     }
 
+    private static int arrayDif[][] = {{4,8,12}, {30,45,59}, {32, 64,128}, {100, 150, 250}};
+
     public static int[][] createStartGrid(int[][] M, int N, int dif) {
+        int n = (int) sqrt(N);
         int[][] flook = new int[N][N];
         int iterator = 0;
         int difficulty = N * N;
-
+        System.out.println(difficulty);
         Random random = new Random();
-        while (iterator < difficulty) {
+
+        while (iterator < arrayDif[n-2][dif]) {
             int i = random.nextInt(N), j = random.nextInt(N);
             if (flook[i][j] == 0) {
                 flook[i][j] = 1;
@@ -133,52 +140,70 @@ public class SudokuGrid {
                 for (int ii = 0; ii < M.length; ii++) {
                     tempM[ii] = Arrays.copyOf(M[ii], M[ii].length);
                 }
-
+                /*
                 if (!SudokuSolver.solveSudoku(tempM, 0, 0, N)) {
                     M[i][j] = temp;
                     difficulty += 1;
                     System.out.println("Конец");
                 }
+                */
             }
         }
+        //print(flook, N);
         System.out.println(difficulty);
         return M;
     }
 
-    public static boolean gridWinCheck(int[][] M, int N) {
-        int checkSum = 0;
+    public static boolean gridWinCheck(int[][] M, int N, int checkSum) {
+        int sumMin = 0;
+        int n = (int) sqrt(N);
+        // сумма по строкам
         for (int i = 0; i < N; i++) {
             int rowSum = 0;
-            checkSum = 0;
             for (int j = 0; j < N; j++) {
+                if (M[i][j] == 0){
+                    return false;
+                }
                 rowSum += M[i][j];
-                checkSum += j + 1;
+                //проверка по внутреним квадратам
+                sumMin = 0;
+                if (i % n == 0 && j % n == 0) {
+                    sumMin = 0;
+                    for (int i2 = 0; i2 < n; i2++) {
+                        for (int j2 = 0; j2 < n; j2++) {
+                            sumMin += M[i2][j2];
+                        }
+                    }
+                    if (sumMin != checkSum) {
+                        return false;
+                    }
+                }
             }
             if (checkSum != rowSum) {
                 return false;
             }
         }
-
+        // сумма по столбцам
         for (int j = 0; j < N; j++) {
             int colSum = 0;
-            checkSum = 0;
             for (int i = 0; i < N; i++) {
                 colSum += M[i][j];
-                checkSum += i + 1;
             }
             if (checkSum != colSum) {
                 return false;
             }
         }
-
         return true;
     }
 
-    public static void print(int[][] M, int N){
-        for (int i=0;i<N;i++){
-            for (int j=0; j<N;j++){
-                System.out.print(M[i][j]); System.out.print(" ");
-            }System.out.println();
-        }System.out.println("___________________");
+    public static void print(int[][] M, int N) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print(M[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        System.out.println("___________________");
     }
 }

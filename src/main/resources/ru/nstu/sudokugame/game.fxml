@@ -20,6 +20,11 @@
               <MenuItem fx:id="menuAuthors" mnemonicParsing="false" text="Авторы" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Секрет">
+              <items>
+                <MenuItem fx:id="menuCheat" mnemonicParsing="false" text="Читы - Бан" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </children>

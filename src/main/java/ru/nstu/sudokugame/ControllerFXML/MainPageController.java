@@ -25,17 +25,19 @@ public class MainPageController implements Initializable {
     ComboBox gridNComboBox;
     @FXML
     Button startButton;
+    @FXML
+    Button exitButton;
 
     @FXML
     public void startButtonAction(ActionEvent event) throws IOException {
-        int dif = 1;
-        int N = 4;
+        int dif = 40;
+        int N = 9;
         if (difficultyComboBox.getValue() == "Легко")
-            dif = 1;
+            dif = 0;
         else if (difficultyComboBox.getValue() == "Средне")
-            dif = 2;
+            dif = 1;
         else if (difficultyComboBox.getValue() == "Сложно")
-            dif = 3;
+            dif = 2;
         if (gridNComboBox.getValue() == "4x4")
             N = 4;
         else if (gridNComboBox.getValue() == "9x9")
@@ -53,12 +55,13 @@ public class MainPageController implements Initializable {
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         mainStage.setScene(gameScene);
         mainStage.show();
-
     }
 
-
-
-
+    @FXML
+    public void exitButtonAction(ActionEvent event){
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -3,12 +3,14 @@ package ru.nstu.sudokugame.Model;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Light;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import static java.lang.Math.sqrt;
@@ -20,10 +22,12 @@ public class Model {
     private int[][] startGrid;
     private int[][] randomGrid;
     private int[][] currGrid;
+    private int checkSum = 0;
 
     public Model(int N, int dif) {
         this.N = N;
         this.difficulty = dif;
+        checkSum = checkSumValue();
 
         start();
     }
@@ -37,12 +41,17 @@ public class Model {
         currGrid = new int[N][N];
     }
 
+    public int checkSumValue(){
+        return N*(N+1)/2;
+    }
+
     public void initTextFields() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 TextField cell = new TextField();
-                cell.setPrefWidth(30);
-                cell.setPrefHeight(30);
+                cell.setPrefWidth(35);
+                cell.setPrefHeight(35);
+                cell.setAlignment(Pos.CENTER);
                 cell.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent keyEvent) {
@@ -65,8 +74,27 @@ public class Model {
                 } else {
                     textFields[i][j].setText(Integer.toString(grid[i][j]));
                     textFields[i][j].setEditable(false);
-                    Font boldFont = Font.font("Arial", FontWeight.BOLD, 12);
+                    Font boldFont = Font.font("Arial", FontWeight.BOLD, 14);
                     textFields[i][j].setFont(boldFont);
+                }
+            }
+        }
+    }
+
+    public void cheat(){
+
+        int[][] solution = new int[startGrid.length][];
+        for (int ii = 0; ii < startGrid.length; ii++) {
+            solution[ii] = Arrays.copyOf(startGrid[ii], startGrid[ii].length);
+        }
+
+        SudokuSolver.solveSudoku(solution,0,0,N);
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (startGrid[i][j] == 0) {
+                    textFields[i][j].setText(Integer.toString(solution[i][j]));
+                    textFields[i][j].setEditable(true);
                 }
             }
         }
@@ -81,10 +109,6 @@ public class Model {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (pattern[j][i] == 1) {
-                    TextField cell = new TextField();
-                    cell.setPrefWidth(30);
-                    cell.setPrefHeight(30);
-                    cell.setAlignment(Pos.CENTER);
                     gridPane.add(textFields[row][col], j, i);
                 }
                 if (pattern[j][i] == 0) {
@@ -132,5 +156,9 @@ public class Model {
 
     public int[][] getStartGrid() {
         return startGrid;
+    }
+
+    public int getCheckSum() {
+        return checkSum;
     }
 }

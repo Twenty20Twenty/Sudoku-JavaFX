@@ -12,6 +12,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.nstu.sudokugame.MainLauncher;
@@ -43,6 +45,8 @@ public class GameController implements Initializable {
     MenuItem menuCloseApp;
     @FXML
     MenuItem menuAuthors;
+    @FXML
+    MenuItem menuCheat;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,9 +56,9 @@ public class GameController implements Initializable {
         Background background = new Background(backgroundFill);
         gridPane.setBackground(background);
 
-        anchorPane.setPrefWidth(N * 30 + (size - N) * 5 + 10);
-        anchorPane.setPrefHeight(N * 30 + (size - N) * 5 + 35);
-        menuBar.setPrefWidth(N * 30 + (size - N) * 5 + 10);
+        anchorPane.setPrefWidth(N * 35 + (size - N) * 5 + 10);
+        anchorPane.setPrefHeight(N * 35 + (size - N) * 5 + 35);
+        menuBar.setPrefWidth(N * 35 + (size - N) * 5 + 10);
         anchorPane.getChildren().add(gridPane);
         gridPane.setLayoutY(30);
         gridPane.setLayoutX(5);
@@ -63,10 +67,12 @@ public class GameController implements Initializable {
     }
 
     public void initAction(){
+        menuCheat.setOnAction(event -> {
+            model.cheat();
+        });
         menuCheck.setOnAction(event -> {
             model.updateCurrentGrid();
-            SudokuGrid.print(model.getCurrGrid(), model.getN());;
-            if ( SudokuGrid.gridWinCheck(model.getCurrGrid(), model.getN())){
+            if ( SudokuGrid.gridWinCheck(model.getCurrGrid(), model.getN(), model.getCheckSum())){
                 Stage dialog = new Stage();
 
                 dialog.initModality(Modality.APPLICATION_MODAL);
@@ -74,8 +80,10 @@ public class GameController implements Initializable {
 
                 Label label = new Label("Победа!");
                 label.setAlignment(Pos.TOP_CENTER);
+                label.setTextAlignment(TextAlignment.CENTER);
+                label.setFont(new Font(24));
 
-                Button closeButton = new Button("Закрыть");
+                Button closeButton = new Button("Закрыть приложение");
                 closeButton.setOnAction(e -> {
                     dialog.close();
                     Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -105,11 +113,11 @@ public class GameController implements Initializable {
                 HBox buttonLayout = new HBox();
                 buttonLayout.getChildren().addAll(menuButton, closeButton);
 
-                VBox dialogLayout = new VBox(10);
+                VBox dialogLayout = new VBox();
                 dialogLayout.getChildren().addAll(label, buttonLayout);
-                dialogLayout.setAlignment(Pos.BOTTOM_CENTER);
+                dialogLayout.setAlignment(Pos.CENTER);
 
-                Scene dialogScene = new Scene(dialogLayout, 200, 200);
+                Scene dialogScene = new Scene(dialogLayout, 275, 200);
                 dialog.setScene(dialogScene);
                 dialog.showAndWait();
             }
@@ -124,9 +132,9 @@ public class GameController implements Initializable {
                 Button closeButton = new Button("Продолжить решение");
                 closeButton.setOnAction(e -> dialog.close());
 
-                VBox dialogLayout = new VBox(10);
+                VBox dialogLayout = new VBox();
                 dialogLayout.getChildren().addAll(label, closeButton);
-                dialogLayout.setAlignment(Pos.BOTTOM_CENTER);
+                dialogLayout.setAlignment(Pos.CENTER);
 
                 Scene dialogScene = new Scene(dialogLayout, 200, 200);
                 dialog.setScene(dialogScene);
@@ -164,11 +172,13 @@ public class GameController implements Initializable {
             dialog.setTitle("Авторы");
 
             Label label = new Label("Лабораторная работа №1\nСтуденты:\nЛипатов Н.А., Драйко А.В.\nГруппа: АВТ-243");
+            label.setAlignment(Pos.CENTER);
             Button closeButton = new Button("Закрыть");
             closeButton.setOnAction(e -> dialog.close());
 
             VBox dialogLayout = new VBox();
             dialogLayout.getChildren().addAll(label, closeButton);
+            dialogLayout.setAlignment(Pos.CENTER);
 
             Scene dialogScene = new Scene(dialogLayout, 200, 200);
             dialog.setScene(dialogScene);
