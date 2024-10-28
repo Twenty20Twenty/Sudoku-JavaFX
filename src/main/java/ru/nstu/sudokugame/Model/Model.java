@@ -3,10 +3,9 @@ package ru.nstu.sudokugame.Model;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Light;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -33,16 +32,21 @@ public class Model {
     }
 
     public void start() {
+        // рандомная сетка
         randomGrid = SudokuGrid.createRandomGrid(N);
+        // стартовая сетка
         startGrid = SudokuGrid.createStartGrid(randomGrid, N, difficulty);
+        // инициализ масив
         textFields = new TextField[N][N];
+        // заполнение масива новыми TextField
         initTextFields();
+        // заполнение значениями
         fillTextField(startGrid);
         currGrid = new int[N][N];
     }
 
-    public int checkSumValue(){
-        return N*(N+1)/2;
+    public int checkSumValue() {
+        return N * (N + 1) / 2;
     }
 
     public void initTextFields() {
@@ -55,7 +59,7 @@ public class Model {
                 cell.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent keyEvent) {
-                        if ("/-*&!@#$%^&*()_+}{[]\"'.<>~`\\|qwertyuiop[]asdfghjkl;'zxcvbnm,./йцукенгшщзхъфывапролджэячсмитьбю. ".contains(keyEvent.getCharacter())) {
+                        if (!"1234567890".contains(keyEvent.getCharacter())) {
                             keyEvent.consume();
                         }
                     }
@@ -81,14 +85,14 @@ public class Model {
         }
     }
 
-    public void cheat(){
+    public void cheat() {
 
         int[][] solution = new int[startGrid.length][];
         for (int ii = 0; ii < startGrid.length; ii++) {
             solution[ii] = Arrays.copyOf(startGrid[ii], startGrid[ii].length);
         }
 
-        SudokuSolver.solveSudoku(solution,0,0,N);
+        SudokuSolver.solveSudoku(solution, 0, 0, N);
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
@@ -104,7 +108,7 @@ public class Model {
         GridPane gridPane = new GridPane();
         int size = N + (int) sqrt(N) - 1;
 
-        int pattern[][] = gridTemplate.generateMatrix(N);
+        int pattern[][] = GridTemplate.generateMatrix(N);
         int row = 0, col = 0;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -132,10 +136,9 @@ public class Model {
     public void updateCurrentGrid() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (!Objects.equals(textFields[i][j].getText(), "")){
+                if (!Objects.equals(textFields[i][j].getText(), "")) {
                     currGrid[i][j] = Integer.parseInt(textFields[i][j].getText());
-                }
-                else {
+                } else {
                     currGrid[i][j] = 0;
                 }
             }

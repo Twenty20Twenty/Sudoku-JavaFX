@@ -8,9 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import ru.nstu.sudokugame.MainLauncher;
 
@@ -30,7 +28,7 @@ public class MainPageController implements Initializable {
 
     @FXML
     public void startButtonAction(ActionEvent event) throws IOException {
-        int dif = 40;
+        int dif = 0;
         int N = 9;
         if (difficultyComboBox.getValue() == "Легко")
             dif = 0;
@@ -58,7 +56,7 @@ public class MainPageController implements Initializable {
     }
 
     @FXML
-    public void exitButtonAction(ActionEvent event){
+    public void exitButtonAction(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }

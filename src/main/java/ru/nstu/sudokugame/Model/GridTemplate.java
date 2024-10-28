@@ -1,6 +1,6 @@
 package ru.nstu.sudokugame.Model;
 
-public class gridTemplate {
+public class GridTemplate {
     public static int[][] generateMatrix(int N) {
 
         int size = N + (int) Math.sqrt(N) - 1;

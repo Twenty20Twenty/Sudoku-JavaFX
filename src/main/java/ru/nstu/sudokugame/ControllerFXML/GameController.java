@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 import static java.lang.Math.sqrt;
 
 public class GameController implements Initializable {
-    static private Model model;
     static int N = 9;
     static int size = 5;
     static int difficulty;
@@ -47,32 +46,48 @@ public class GameController implements Initializable {
     MenuItem menuAuthors;
     @FXML
     MenuItem menuCheat;
+    private Model model;
+
+    public static void setN(int n) {
+        N = n;
+        size = N + (int) sqrt(N) - 1;
+    }
+
+    public static void setSize(int size) {
+        GameController.size = size;
+    }
+
+    public static void setDifficulty(int difficulty) {
+        GameController.difficulty = difficulty;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // иниц модель
         model = new Model(N, difficulty);
+        // создание PaneGrid для пользов интерф
         GridPane gridPane = model.createSudokuGridUI(N);
         BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK, null, null);
         Background background = new Background(backgroundFill);
         gridPane.setBackground(background);
-
+        // настройка размеров
         anchorPane.setPrefWidth(N * 35 + (size - N) * 5 + 10);
         anchorPane.setPrefHeight(N * 35 + (size - N) * 5 + 35);
         menuBar.setPrefWidth(N * 35 + (size - N) * 5 + 10);
         anchorPane.getChildren().add(gridPane);
         gridPane.setLayoutY(30);
         gridPane.setLayoutX(5);
-
+        // иниц обработчиков меню
         initAction();
     }
 
-    public void initAction(){
+    public void initAction() {
         menuCheat.setOnAction(event -> {
             model.cheat();
         });
         menuCheck.setOnAction(event -> {
             model.updateCurrentGrid();
-            if ( SudokuGrid.gridWinCheck(model.getCurrGrid(), model.getN(), model.getCheckSum())){
+            if (SudokuGrid.gridWinCheck(model.getCurrGrid(), model.getN(), model.getCheckSum())) {
                 Stage dialog = new Stage();
 
                 dialog.initModality(Modality.APPLICATION_MODAL);
@@ -120,8 +135,7 @@ public class GameController implements Initializable {
                 Scene dialogScene = new Scene(dialogLayout, 275, 200);
                 dialog.setScene(dialogScene);
                 dialog.showAndWait();
-            }
-            else {
+            } else {
                 Stage dialog = new Stage();
 
                 dialog.initModality(Modality.APPLICATION_MODAL);
@@ -184,18 +198,5 @@ public class GameController implements Initializable {
             dialog.setScene(dialogScene);
             dialog.showAndWait();
         });
-    }
-
-    public static void setN(int n) {
-        N = n;
-        size = N + (int) sqrt(N) - 1;
-    }
-
-    public static void setSize(int size) {
-        GameController.size = size;
-    }
-
-    public static void setDifficulty(int difficulty) {
-        GameController.difficulty = difficulty;
     }
 }

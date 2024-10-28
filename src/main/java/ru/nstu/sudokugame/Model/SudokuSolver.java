@@ -11,8 +11,7 @@ public class SudokuSolver {
     such a way to meet the requirements for
     Sudoku solution (non-duplication across rows,
     columns, and boxes) */
-    static boolean solveSudoku(int grid[][], int row, int col, int N)
-    {
+    static boolean solveSudoku(int grid[][], int row, int col, int N) {
 
         /*if we have reached the 8th
            row and 9th column (0
@@ -66,8 +65,7 @@ public class SudokuSolver {
     // Check whether it will be legal
     // to assign num to the
     // given row, col
-    static boolean isSafe(int[][] grid, int row, int col, int num, int N)
-    {
+    static boolean isSafe(int[][] grid, int row, int col, int num, int N) {
         int n = (int) sqrt(N);
         // Check if we find the same num
         // in the similar row , we

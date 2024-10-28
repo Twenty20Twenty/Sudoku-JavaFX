@@ -1,14 +1,12 @@
 package ru.nstu.sudokugame.Model;
 
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
-import java.util.Arrays;
 import java.util.Random;
 
 import static java.lang.Math.sqrt;
 
 public class SudokuGrid {
+
+    private static int arrayDif[][] = {{4, 8, 12}, {30, 45, 59}, {32, 64, 128}, {100, 150, 250}};
 
     public static int[][] createRandomGrid(int N) {
         int[][] matrix = new int[N][N];
@@ -116,41 +114,24 @@ public class SudokuGrid {
         return M;
     }
 
-    private static int arrayDif[][] = {{4,8,12}, {30,45,59}, {32, 64,128}, {100, 150, 250}};
-
     public static int[][] createStartGrid(int[][] M, int N, int dif) {
         int n = (int) sqrt(N);
         int[][] flook = new int[N][N];
         int iterator = 0;
-        int difficulty = N * N;
-        System.out.println(difficulty);
+        //int difficulty = N * N;
+        //System.out.println(difficulty);
         Random random = new Random();
 
-        while (iterator < arrayDif[n-2][dif]) {
+        while (iterator < arrayDif[n - 2][dif]) {
             int i = random.nextInt(N), j = random.nextInt(N);
             if (flook[i][j] == 0) {
                 flook[i][j] = 1;
                 iterator += 1;
 
-                int temp = M[i][j];
                 M[i][j] = 0;
-                difficulty -= 1;
-
-                int[][] tempM = new int[M.length][];
-                for (int ii = 0; ii < M.length; ii++) {
-                    tempM[ii] = Arrays.copyOf(M[ii], M[ii].length);
-                }
-                /*
-                if (!SudokuSolver.solveSudoku(tempM, 0, 0, N)) {
-                    M[i][j] = temp;
-                    difficulty += 1;
-                    System.out.println("Конец");
-                }
-                */
+                //difficulty -= 1;
             }
         }
-        //print(flook, N);
-        System.out.println(difficulty);
         return M;
     }
 
@@ -161,7 +142,7 @@ public class SudokuGrid {
         for (int i = 0; i < N; i++) {
             int rowSum = 0;
             for (int j = 0; j < N; j++) {
-                if (M[i][j] == 0){
+                if (M[i][j] == 0) {
                     return false;
                 }
                 rowSum += M[i][j];

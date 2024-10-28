@@ -3,6 +3,7 @@ package ru.nstu.sudokugame;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class SudokuApp extends javafx.application.Application {
         mainStage.setMaximized(false);
         mainStage.setResizable(false);
         mainStage.setTitle("Sudoku Game");
+        mainStage.getIcons().add(new Image(MainLauncher.class.getResourceAsStream("icon-logo.png")));
 
         mainStage.setScene(mainPageScene);
         mainStage.show();
